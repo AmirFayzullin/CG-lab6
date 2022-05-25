@@ -7,7 +7,7 @@
 
 using namespace std;
 
-static const char* pEffectFile = "C:/Users/Amir/Desktop/For UGATU/Computer graphics/shaders/shaders39/lighting.glsl";
+static const char* pEffectFile = "C:/Users/Amir/Desktop/For UGATU/Computer graphics/shaders/shaders40/lighting.glsl";
 
 LightingTechnique::LightingTechnique() : Technique(pEffectFile)
 {   
