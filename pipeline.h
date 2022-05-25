@@ -2,6 +2,22 @@
 #define	PIPELINE_H
 
 #include "math_3d.h"
+#include "camera.h"
+
+struct Orientation
+{
+    Vector3f m_scale;
+    Vector3f m_rotation;
+    Vector3f m_pos;       
+    
+    Orientation()
+    {
+        m_scale    = Vector3f(1.0f, 1.0f, 1.0f);
+        m_rotation = Vector3f(0.0f, 0.0f, 0.0f);
+        m_pos      = Vector3f(0.0f, 0.0f, 0.0f);
+    }
+};
+
 
 class Pipeline
 {
@@ -13,6 +29,17 @@ public:
         m_rotateInfo = Vector3f(0.0f, 0.0f, 0.0f);
     }
 
+    void Scale(float s)
+    {
+        Scale(s, s, s);
+    }
+    
+    
+    void Scale(const Vector3f& scale)
+    {
+        Scale(scale.x, scale.y, scale.z);
+    }
+    
     void Scale(float ScaleX, float ScaleY, float ScaleZ)
     {
         m_scale.x = ScaleX;
@@ -38,6 +65,11 @@ public:
         m_rotateInfo.y = RotateY;
         m_rotateInfo.z = RotateZ;
     }
+    
+    void Rotate(const Vector3f& r)
+    {
+        Rotate(r.x, r.y, r.z);
+    }
 
     void SetPerspectiveProj(const PersProjInfo& p)
     {
@@ -50,7 +82,20 @@ public:
         m_camera.Target = Target;
         m_camera.Up = Up;
     }
+    
+    void SetCamera(const Camera& camera)
+    {
+        SetCamera(camera.GetPos(), camera.GetTarget(), camera.GetUp());
+    }
+    
+    void Orient(const Orientation& o)
+    {
+        m_scale      = o.m_scale;
+        m_worldPos   = o.m_pos;
+        m_rotateInfo = o.m_rotation;
+    }
 
+	const Matrix4f& GetWVTrans();
     const Matrix4f& GetVPTrans();
     const Matrix4f& GetWVPTrans();
     const Matrix4f& GetWorldTrans();
@@ -70,6 +115,7 @@ private:
 
     Matrix4f m_WVPtransformation;
     Matrix4f m_VPTtransformation;
+	Matrix4f m_WVtransformation;
     Matrix4f m_WorldTransformation;
 };
 

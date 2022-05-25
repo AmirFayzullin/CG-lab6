@@ -1,4 +1,5 @@
 #include "shadow_map_technique.h"
+#include "pipeline.h"
 
 
 ShadowMapTechnique::ShadowMapTechnique()
@@ -11,11 +12,11 @@ bool ShadowMapTechnique::Init()
         return false;
     }
 
-    if (!AddShader(GL_VERTEX_SHADER, "C:/Users/Amir/Desktop/For UGATU/Computer graphics/shaders/shaders42/shadow_map.vs")) {
+    if (!AddShader(GL_VERTEX_SHADER, "C:/Users/Amir/Desktop/For UGATU/Computer graphics/shaders/shaders43/shadow_map.vs")) {
         return false;
     }
 
-    if (!AddShader(GL_FRAGMENT_SHADER, "C:/Users/Amir/Desktop/For UGATU/Computer graphics/shaders/shaders42/shadow_map.fs")) {
+    if (!AddShader(GL_FRAGMENT_SHADER, "C:/Users/Amir/Desktop/For UGATU/Computer graphics/shaders/shaders43/shadow_map.fs")) {
         return false;
     }
 
@@ -24,22 +25,31 @@ bool ShadowMapTechnique::Init()
     }
 
     m_WVPLocation = GetUniformLocation("gWVP");
-    m_textureLocation = GetUniformLocation("gShadowMap");
+    m_WorldMatrixLocation = GetUniformLocation("gWorld");
+    m_lightWorldPosLoc = GetUniformLocation("gLightWorldPos");
 
     if (m_WVPLocation == INVALID_UNIFORM_LOCATION ||
-        m_textureLocation == INVALID_UNIFORM_LOCATION) {
+	m_WorldMatrixLocation == INVALID_UNIFORM_LOCATION ||
+        m_lightWorldPosLoc == INVALID_UNIFORM_LOCATION) {
         return false;
     }
 
     return true;
 }
 
+
 void ShadowMapTechnique::SetWVP(const Matrix4f& WVP)
 {
     glUniformMatrix4fv(m_WVPLocation, 1, GL_TRUE, (const GLfloat*)WVP.m);
 }
 
-void ShadowMapTechnique::SetTextureUnit(unsigned int TextureUnit)
+
+void ShadowMapTechnique::SetWorld(const Matrix4f& World)
 {
-    glUniform1i(m_textureLocation, TextureUnit);
+    glUniformMatrix4fv(m_WorldMatrixLocation, 1, GL_TRUE, (const GLfloat*)World.m);
+}
+
+void ShadowMapTechnique::SetLightWorldPos(const Vector3f& Pos)
+{
+    glUniform3f(m_lightWorldPosLoc, Pos.x, Pos.y, Pos.z);    
 }

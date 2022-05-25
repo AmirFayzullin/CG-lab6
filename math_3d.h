@@ -253,6 +253,11 @@ public:
         return r;
     }
     
+    operator const float*() const
+    {
+        return &(m[0][0]);
+    }
+    
     void Print() const
     {
         for (int i = 0 ; i < 4 ; i++) {
