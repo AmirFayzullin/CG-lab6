@@ -1,3 +1,7 @@
 Debug
 lab6.*
 *.dll
+*.glsl
+*.fs
+*.vs
+*.lib
