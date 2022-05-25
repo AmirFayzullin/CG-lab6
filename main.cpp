@@ -75,7 +75,7 @@ public:
         m_pointLight.DiffuseIntensity = 0.9f;
         m_pointLight.Color = Vector3f(1.0f, 1.0f, 1.0f);
         m_pointLight.Attenuation.Linear = 0.0f;
-        m_pointLight.Position  = Vector3f(0.0, 5.0, 0.0f);
+        m_pointLight.Position  = Vector3f(0.0, 10.0, 0.0f);
 
         m_persProjInfo.FOV = 90.0f;
         m_persProjInfo.Height = WINDOW_HEIGHT;
@@ -147,8 +147,8 @@ public:
             return false;
 	}
         
-        m_mesh1Orientation.m_pos = Vector3f(0.0f, 3.0f, 0.0f);
-        m_mesh2Orientation.m_pos = Vector3f(0.0f, 5.0f, 3.0f);
+        m_mesh1Orientation.m_pos = Vector3f(0.0f, 7.0f, 0.0f);
+        m_mesh2Orientation.m_pos = Vector3f(0.0f, 3.0f, 0.0f);
         
 #ifdef FREETYPE
         if (!m_fontRenderer.InitFontRenderer()) {
